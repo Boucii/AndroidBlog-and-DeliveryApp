@@ -1,0 +1,62 @@
+@charset "utf-8";
+/*第一种配色*/
+.body1 {
+    background-color: #6d9cb6 !important;
+}
+
+.cardcolor1 {
+    color: #105573 !important;
+    background-color: #9dc1d8 !important;
+    border-color: #105573 !important;
+
+}
+
+.changetoblog1 {
+    background-color: rgb(171, 149, 208) !important;
+}
+
+.changetocomment1 {
+    background-color: #60959f !important;
+}
+
+.body2 {
+    background-color: rgb(219, 200, 230) !important;
+}
+
+.cardcolor2 {
+    background-color: rgb(176, 171, 222) !important;
+    border-color: #633b98 !important;
+}
+.comment-input1{
+color: white !important;
+}
+.commentinputdiv1{
+    background-color: rgb(99, 114, 186)!important;
+}
+.subcomment1{
+    background-color: #d0c8ed !important;
+    border-color: #633b98 !important;
+}
+.tomyblog1{
+    background-color:rgb(212, 121, 120) !important;
+}
+.tomyblog2{
+    background-color:#6d9cb6 !important;
+}
+.tomyblog3{
+    background-color: rgb(219, 200, 230) !important;
+}
+.tomyblog4{
+    background: rgb(141, 136, 79) !important;
+}
+.blogtext1{
+    color:#105573 !important;
+}
+.nametag1{
+    color:#105573 !important;
+}
+.blogcomment1{
+    color:#633b98 !important;
+}
+/*dsfsdf*/
+

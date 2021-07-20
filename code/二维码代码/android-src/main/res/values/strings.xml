@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">qr</string>
+    <string name="loginbtn">登录</string>
+    <string name="registerbtn">注册</string>
+    <string name="username">用户名</string>
+    <string name="pwd">密码</string>
+    <string name="sendername">发件人姓名</string>
+    <string name="receivername">收件人姓名</string>
+    <string name="tel">电话号码</string>
+    <string name="addr">地址</string>
+    <string name="sendpackage">发送包裹</string>
+    <string name="update">更新权限</string>
+    <string name="appname">快递盒子</string>
+    <string name="title_activity_main4">Main4Activity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+
+</resources>

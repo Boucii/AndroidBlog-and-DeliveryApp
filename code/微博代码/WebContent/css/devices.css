@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+@media only screen and (max-width: 330px) and (min-width: 100px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 1% !important;
+		z-index: 99;
+	}
+}
+
+@media only screen and (max-width: 420px) and (min-width: 330px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 8% !important;
+		z-index: 99;
+	}
+}
+
+@media only screen and (max-width: 500px) and (min-width: 400px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 13% !important;
+		z-index: 99;
+	}
+}
+
+@media only screen and (max-width: 600px) and (min-width: 500px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 18% !important;
+		z-index: 99;
+	}
+}
+@media only screen and (max-width: 700px) and (min-width: 600px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 24% !important;
+		z-index: 99;
+	}
+}
+@media only screen and (max-width: 800px) and (min-width: 700px) {
+	.card {
+		backface-visibility: hidden;
+		border-radius: 30px;
+		position: absolute;
+		top: 10%;
+		left: 29% !important;
+		z-index: 99;
+	}
+}

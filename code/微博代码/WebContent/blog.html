@@ -1,0 +1,737 @@
+<head>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+	<meta name="viewport"
+		content="width=device-width, height=device-height,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="css/animate.css" />
+	<link rel="stylesheet" href="css/flip.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/colors.css" />
+	<link rel="stylesheet" href="css/bounce.css" />
+    <link rel="stylesheet" href="css/devices.css" />
+	<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/jquery-ui/jquery-ui.min.js"></script>
+	<script src="js/tpunch-modified.js"></script>
+	<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<!-- <script src="js/drag.js"></script>-->
+	<script src="js/blog.js"></script>
+	<script src="js/swipesupport.js"></script>
+	<script src="js/cardtricks.js"></script>
+	<script>
+		var animate_done = 1;
+		$(document)
+			.ready(
+				function () {
+					$("#card1")
+						.on(
+							"swipeleft",
+							function () {
+								if (animate_done == 1) {
+									animate_done = 0;
+									$("#card1")
+										.addClass(
+											"animated rotateOutUpLeft back-card");
+									$("#card1")
+										.removeClass(
+											"front-card");
+									setTimeout(
+										function () {
+											$("#card1")
+												.removeClass(
+													"animated rotateOutUpLeft");
+										}, 1000);
+
+									$("#card2")
+										.addClass(
+											"animated zoomIn front-card");
+									update_blog();
+									setTimeout(
+										function () {
+											$("#card2")
+												.removeClass(
+													"animated zoomIn back-card");
+											animate_done = 1;
+										}, 1000);
+								}
+							});
+					$("#card2")
+						.on(
+							"swipeleft",
+							function () {
+								if (animate_done == 1) {
+									animate_done = 0;
+									$("#card2")
+										.addClass(
+											"animated rotateOutUpLeft back-card");
+									$("#card2")
+										.removeClass(
+											"front-card");
+									setTimeout(
+										function () {
+											$("#card2")
+												.removeClass(
+													"animated rotateOutUpLeft");
+										}, 1000);
+
+									$("#card1")
+										.addClass(
+											"animated zoomIn front-card");
+									update_blog();
+									setTimeout(
+										function () {
+											$("#card1")
+												.removeClass(
+													"animated zoomIn back-card");
+											animate_done = 1;
+										}, 1000);
+								}
+							});
+					$("#card1")
+						.on(
+							"swiperight",
+							function () {
+								if (animate_done == 1) {
+									animate_done = 0;
+									$("#card1")
+										.addClass(
+											"animated rotateOutUpRight back-card");
+									$("#card1")
+										.removeClass(
+											"front-card");
+									setTimeout(
+										function () {
+											$("#card1")
+												.removeClass(
+													"animated rotateOutUpRight");
+										}, 1000);
+
+									$("#card2")
+										.addClass(
+											"animated zoomIn front-card");
+									update_blog();
+									setTimeout(
+										function () {
+											$("#card2")
+												.removeClass(
+													"animated zoomIn back-card");
+											animate_done = 1;
+										}, 1000);
+								}
+							});
+					$("#card2")
+						.on(
+							"swiperight",
+							function () {
+								if (animate_done == 1) {
+									animate_done = 0;
+									$("#card2")
+										.addClass(
+											"animated rotateOutUpRight back-card");
+									$("#card2")
+										.removeClass(
+											"front-card");
+									setTimeout(
+										function () {
+											$("#card2")
+												.removeClass(
+													"animated rotateOutUpRight");
+										}, 1000);
+
+									$("#card1")
+										.addClass(
+											"animated zoomIn front-card");
+									update_blog();
+									setTimeout(
+										function () {
+											$("#card1")
+												.removeClass(
+													"animated zoomIn back-card");
+											animate_done = 1;
+										}, 1000);
+								}
+							});
+				});
+	</script>
+	<script>
+		function update_blog() {
+			if (mine == 0) {
+				fetch_next_blog();
+			} else {
+				fetch_next_mine_blog();
+			}
+		}
+
+		function fetch_next_mine_blog() {
+			var myRequest = new Request('/MicroBlog/FetchMineServlet', {
+				credentials: 'include'
+			});
+			fetch(myRequest)
+				.then(
+					function (response) {
+						return response
+							.json()
+							.then(
+								function (json) {
+									var blogtext = json.text;
+									var username = json.userName;
+									var uid = json.userID;
+									var BID = json.BID;
+									var haspic = json.haspic;
+									if (BID == -1) {
+										blogtext = "还没有博客呢,快去发一条吧!";
+										document
+											.querySelector(".front-card .blogtext").value = "\n" + blogtext;
+										document
+										.querySelector(".front-card .nametag").innerHTML = "myspace";
+										var picsrc = "/MicroBlog/GetPortraitServlet?uid=" + uid;
+										document
+										.querySelector(".front-card .blogimg").src = picsrc;
+										
+										pullicon(0);
+									} else {
+										document
+											.querySelector(".front-card .blogtext").value = "\n" + blogtext;
+										document
+											.querySelector(".front-card .nametag").innerHTML = username;
+										var picsrc = "/MicroBlog/GetPortraitServlet?uid=" + uid;
+										document
+											.querySelector(".front-card .blogimg").src = picsrc;
+										if (haspic == 1) {
+											$("#img-in-blog")[0].src = "/MicroBlog/FetchBlogimgServlet?bid=" + BID;
+											pullicon(1);
+										} else {
+											pullicon(0);
+										}
+									}
+									var commentstr = "";
+									for (i = 0; i < json.commentusers.length; i++) {
+										var name = json.commentusers[i];
+										var comment = json.comments[i];
+										commentstr += name;
+										commentstr += ":";
+										commentstr += comment;
+										commentstr += "\n";
+									}
+									if (i == 0) {
+										commentstr = "\n还没有人评论过呢=_="
+									}
+									document
+										.querySelector(".blogcomment").value = commentstr;
+								});
+					});
+
+		}
+
+		function fetch_next_blog() {
+			var myRequest = new Request('/MicroBlog/fetchblogservlet', {
+				credentials: 'include'
+			});
+			fetch(myRequest)
+				.then(
+					function (response) {
+						return response
+							.json()
+							.then(
+								function (json) {
+									var blogtext = json.text;
+									var username = json.userName;
+									var uid = json.userID;
+									var BID = json.BID;
+									var haspic = json.haspic;
+									if (BID == -1) {
+										blogtext = "还没有博客呢,快去发一条吧!";
+										document
+											.querySelector(".front-card .blogtext").value = "\n" + blogtext;
+										pullicon(0);
+									} else {
+										document
+											.querySelector(".front-card .blogtext").value = "\n" + blogtext;
+										document
+											.querySelector(".front-card .nametag").innerHTML = username;
+										var picsrc = "/MicroBlog/GetPortraitServlet?uid=" + uid;
+										document
+											.querySelector(".front-card .blogimg").src = picsrc;
+										if (haspic == 1) {
+											$("#img-in-blog")[0].src = "/MicroBlog/FetchBlogimgServlet?bid=" + BID;										
+											pullicon(1);
+										} else {
+											pullicon(0);
+										}
+									}
+									var commentstr = "";
+									for (i = 0; i < json.commentusers.length; i++) {
+										var name = json.commentusers[i];
+										var comment = json.comments[i];
+										commentstr += "\n";
+										commentstr += name;
+										commentstr += ":";
+										commentstr += comment;
+										commentstr += "\n";
+									}
+									if (i == 0) {
+										commentstr = "\n还没有人评论过呢=_="
+									}
+									document
+										.querySelector(".blogcomment").value = commentstr;
+								});
+					});
+		}
+	</script>
+	<script>
+		var mine = 0; //页面状态,=0为浏览博客,=1为我的空间
+		var write = 0; //=0为其他,=1为写博客页面
+		function changecolor() {
+			if (write == 0) { //只有在非写博客页面才有用
+				if (mine == 0) {
+					mine = 1;
+					$(".front-card").addClass("cardcolor1");
+					$(".back-card").addClass("cardcolor1");
+					$(".changetocomment").addClass("changetocomment1");
+					$(".comment-card").addClass("cardcolor2");
+					$(".changetoblog").addClass("changetoblog1");
+					$(".commentinput").addClass("commentinput1");
+					$(".commentinputdiv").addClass("commentinputdiv1");
+					$(".subcomment").addClass("subcomment1");
+					$(".blogtext").addClass("blogtext1");
+					$(".nametag").addClass("nametag1");
+					$(".blogcomment").addClass("blogcomment1");
+					$("#tomyblog").removeClass("tomyblog2");
+					$("#tomyblog").addClass("tomyblog1");
+					if (commentup == 0) {
+						$("body").removeClass("body2");
+						$("body").addClass("body1");
+					} else {
+						$("body").removeClass("body2");
+						$("body").addClass("body2");
+
+					}
+
+				} else {
+					mine = 0;
+					$("body").removeClass("body1");
+					$("body").removeClass("body2");
+					$(".front-card").removeClass("cardcolor1");
+					$(".back-card").removeClass("cardcolor1");
+					$(".changetocomment").removeClass("changetocomment1");
+					$(".comment-card").removeClass("cardcolor2");
+					$(".changetoblog").removeClass("changetoblog1");
+					$(".commentinput").removeClass("commentinput1");
+					$(".commentinputdiv").removeClass("commentinputdiv1");
+					$(".subcomment").removeClass("subcomment1");
+					$(".blogtext").removeClass("blogtext1");
+					$(".nametag").removeClass("nametag1");
+					$(".blogcomment").removeClass("blogcomment1");
+					$("#tomyblog").removeClass("tomyblog1");
+					$("#tomyblog").addClass("tomyblog2");
+				}
+				update_blog();
+			}
+		}
+	</script>
+	<script>
+		var do_comment = function () {
+			var cmt = $("#commentinput").val();
+			if (cmt == "") {
+				alert("-水的太明显了吧-");
+				return false;
+			}
+			var para = "comment=" + cmt;
+			var myRequest = new Request('/MicroBlog/CommentServlet?' + para, {
+				credentials: 'include'
+			});
+			fetch(myRequest)
+				.then((res) => res.text())
+				.then(data => {
+					if (data == "commentsuccessful!") {
+						var original_cmt = $(".blogcomment").val();
+						if (original_cmt.startsWith("\n还没有人评论")) {
+							original_cmt = "";
+						}
+						//$("#commentinput").html("");
+						//$(".blogcomment").html(original_cmt + "\n" + "我说:" + cmt);
+						$("#commentinput").val("");
+						$(".blogcomment").val(original_cmt + "\n" + "我说:" + cmt);
+					} else if (data == "rats--and that was an error=_=") {
+						alert("NO!出问题了啊+_<");
+					}
+				})
+				.catch(err => console.log(err));
+		}
+	</script>
+	<style>
+		.ui-loader-default {
+			display: none
+		}
+
+		/*
+.ui-mobile-viewport {
+	border: none;
+}
+*/
+		.ui-page {
+			padding: 0;
+			margin: 0;
+			outline: 0
+		}
+
+		* {
+			font-family: "shakai";
+			-webkit-transition-property: background-color;
+			-webkit-transition-duration: 0.3s;
+			-webkit-transition-timing-function: ease;
+			transition-property: background-color;
+			transition-duration: 0.5s;
+			transition-timing-function: ease;
+		}
+
+		body {
+			background-color: rgb(212, 121, 120);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		textarea {
+			resize: none;
+			background-color: rgba(0, 0, 0, 0);
+			user-select: auto !important;
+			-o-user-select: auto !important;
+			-ms-user-select: auto !important;
+			-webkit-touch-callout: text !important;
+			-webkit-user-select: text !important;
+		}
+
+		.card {
+			backface-visibility: hidden;
+			border-radius: 30px;
+			position: absolute;
+			top: 10%;
+			left: 37%;
+			z-index: 99;
+		}
+
+		.AnimateFast {
+			animation-duration: 0.1s;
+		}
+
+		@media screen and (max-width: 1100px) {
+			.card {
+				backface-visibility: hidden;
+				border-radius: 30px;
+				position: absolute;
+				top: 10%;
+				left: 7%;
+				z-index: 99;
+			}
+		}
+
+		.front-card {
+			float: left;
+			overflow: hidden;
+			z-index: 20;
+			height: 500px;
+			width: 300px;
+			background: rgb(235, 193, 180);
+			border: 6px solid rgb(209, 63, 47);
+		}
+
+		.back-card {
+			z-index: 10;
+			overflow: hidden;
+			height: 500px;
+			width: 300px;
+			background: rgb(235, 193, 180);
+			border: 6px solid rgb(209, 63, 47);
+		}
+
+		.comment-card {
+			display: inline;
+			z-index: 10;
+			overflow: hidden;
+			height: 500px;
+			width: 300px;
+			background: rgb(141, 136, 79);
+			border: 6px solid rgb(80, 84, 80);
+		}
+
+		.blog {
+			height: 100%;
+		}
+
+		.blogtext {
+			position: relative;
+			top: 70px;
+			margin: 0;
+			border: 0;
+			font-family: "shakai";
+			font-size: 24px;
+			left: 2.5%;
+			height: 70% !important;
+			width: 100%;
+			resize: none;
+			color: #dc3333;
+		}
+
+		.blogimg {
+			background-color: white;
+			position: absolute;
+			display: inline;
+			top: 1%;
+			left: 1%;
+			height: 50px;
+			width: 50px;
+			border-radius: 100%;
+			overflow: hidden;
+			float: left;
+		}
+
+		.nametag {
+			position: relative;
+			top: 10px;
+			font-size: 26px;
+			right: 5px;
+			float: right;
+			text-decoration: none;
+			color: rgb(212, 121, 120);
+		}
+
+		.blogcomment {
+			height: 70% !important;
+			margin: 0;
+			border: 0;
+			resize: none;
+			width: 100%;
+			position: absolute;
+			height: 80%;
+			top: 13%;
+			color: rgba(255, 231, 164, 1);
+			font-size: 17px;
+		}
+
+		.changetocomment {
+			position: absolute;
+			height: 10%;
+			width: 100%;
+			top: 89%;
+			left: 0;
+			border-radius: 30px;
+			border: 0;
+			margin: 0;
+			background-color: rgb(216, 123, 115);
+		}
+
+		.changetoblog {
+			position: absolute;
+			height: 10%;
+			width: 100%;
+			top: 89%;
+			left: 0;
+			border-radius: 30px;
+			border: 0;
+			margin: 0;
+			background-color: rgb(188, 171, 123);
+		}
+
+		.commentinputdiv {
+			position: absolute;
+			top: 2%;
+			left: 2%;
+			width: 93%;
+			height: 8%;
+			border-radius: 25px 25px 15px 15px;
+			background-color: rgba(147, 159, 128, 1);
+			border-left: 3px solid rgb(80, 84, 80);
+			border-top: 6px solid rgb(80, 84, 80);
+			border-right: 3px solid rgb(80, 84, 80);
+			border-bottom: 1px solid rgb(80, 84, 80);
+		}
+
+		.commentinput {
+			float: left;
+			position: relative;
+			width: 80%;
+			height: 80%;
+			color: rgb(234, 212, 153);
+			font-size: 20px;
+			background-color: rgba(188, 171, 123, 0);
+			border-radius: 10px;
+			border: 0;
+			margin: 0;
+		}
+
+		.subcomment {
+			float: right;
+			position: absolute;
+			width: 18%;
+			height: 90%;
+			top: 3%;
+			background-color: rgba(211, 199, 144, 1);
+			border-radius: 15px;
+			border-left: 3px solid rgb(80, 84, 80);
+			border-top: 1px solid rgb(80, 84, 80);
+			border-right: 3px solid rgb(80, 84, 80);
+			border-bottom: 5px solid rgb(80, 84, 80);
+		}
+
+		#tomyblog {
+			z-index: 99;
+			width: 50px;
+			height: 50px;
+			left: 0;
+			background-color: #6d9cb6;
+			border-radius: 50%;
+			border: 0px;
+			margin: 0px;
+		}
+
+		.pendulum {
+			-webkit-animation: Pendulum 3s ease-in-out alternate infinite;
+			-moz-animation: Pendulum 3s ease-in-out alternate infinite;
+			animation: Pendulum 3s ease-in-out alternate infinite;
+		}
+
+		.icondrag {
+
+			position: fixed;
+			top: -30%;
+			right: 10%;
+			width: 40px;
+			height: 300px;
+			z-index: 999;
+		}
+
+		.checkicon {
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			z-index: 999;
+		}
+
+		.hidden {
+			display: none
+		}
+	</style>
+
+</head>
+
+<body>
+
+
+	<div class="card" id="maindev">
+		<div class="comment-card card list flip out" id="card4">
+			<div class="commentinputdiv">
+				<input class="commentinput" id="commentinput" type="text" placeholder="输入评论" />
+				<button class="subcomment" onclick="do_comment()" type="submit"></button>
+			</div>
+			<div>
+				<textarea class="blogcomment" readonly>
+			</textarea>
+			</div>
+
+			<button class="changetoblog" onclick="javascript:changetab()"></button>
+		</div>
+		<div class="list flip card">
+			<div class="front-card card" id="card1">
+				<div class="blog">
+					<img class="blogimg" src="./assets/userimgs/testpot.png" /> <a class="nametag" href="">到此一游</a>
+					<textarea class="blogtext" readonly>
+				</textarea>
+					<button class="changetocomment" onclick="javascript:changetab()"></button>
+				</div>
+			</div>
+			<div class="back-card card" id="card2">
+				<div class="blog">
+					<img class="blogimg" src="./assets/userimgs/testpot.png" /> <a class="nametag" href="">到此一游</a>
+					<textarea class="blogtext" readonly>
+                </textarea>
+					<button class="changetocomment" onclick="javascript:changetab()"></button>
+				</div>
+			</div>
+			<div class="card write-card" id="card5">
+				<div class="writediv">
+					<textarea contenteditable="true" class="bloginput">写一篇博客吧
+				</textarea>
+				</div>
+				<div>
+					<label title="上传图片" for="chooseBImg" class="choose-btn2">
+						<img id="getImg" style="display:none;height:500px;width:500px" /><input type="file"
+							accept="image/jpg,image/jpeg,image/png" name="file" id="chooseBImg" class="hidden"
+							onchange="showImg(this)">
+					</label>
+				</div>
+				<div>
+					<button class="postbutton" onclick="postBlog()"></button>
+				</div>
+			</div>
+			<div class="card img-card" id="card7">
+				<img class="img-in-blog" id="img-in-blog" src="assets/pics/cats.png">
+			</div>
+		</div>
+		<div class="icondrag">
+			<img class="checkicon" src="assets/pics/staticicon.png" />
+		</div>
+	</div>
+	<div class="changebtn" style="z-index: 99">
+		<div onclick="javascript:changecolor()" id="tomyblog"></div>
+	</div>
+	<script>
+		var eleBack = null,
+			eleFront = null,
+			eleList = $(".list");
+		var commentup = 0; //评论的这一面是否在上面
+
+		function changetab() { //切换评论与博客主页
+			if (mine == 0) {
+				if (commentup == 0) {
+					$("body").css("background-color", "rgb(220,204,171)");
+					commentup = 1;
+				} else {
+					$("body").css("background-color", "rgb(212,121,120)");
+					commentup = 0;
+				}
+			} else {
+				if (commentup == 0) {
+					$("body").removeClass("body1");
+					$("body").css("background-color", "rgb(220,204,171)");
+					$("body").addClass("body2");
+					commentup = 1;
+				} else {
+					$("body").removeClass("body2");
+					$("body").css("background-color", "rgb(212,121,120)");
+					$("body").addClass("body1");
+					commentup = 0;
+				}
+			}
+
+			eleFront.addClass("out").removeClass("in");
+			setTimeout(function () {
+				eleBack.addClass("in").removeClass("out");
+				BackOrFront();
+			}, 225);
+			return false;
+		}
+
+		function BackOrFront() {
+			eleList.each(function () {
+				if ($(this).hasClass("out")) {
+					eleBack = $(this);
+				} else {
+					eleFront = $(this);
+				}
+			});
+		}
+		$(document).ready(function () {
+			placewrite();
+			dealer_in();
+			BackOrFront();
+			update_blog();
+		});
+	</script>
+
+</body>

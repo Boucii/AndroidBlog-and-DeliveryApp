@@ -1,0 +1,473 @@
+<head>
+<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+<meta name="viewport"
+	content="width=device-width, height=device-height,initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta http-equiv="content-type" content="text/html; charset=GBK">
+<link rel="stylesheet" href="css/animate.css" />
+<link rel="stylesheet" href="css/flip.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/bounce.css" />
+<link rel="stylesheet" href="css/devices.css" />
+<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/jquery-ui/jquery-ui.min.js"></script>
+<script
+	src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/tpunch-modified.js"></script>
+<script src="js/login.js"></script>
+<link rel="stylesheet" href="css/cropper.min.css">
+<script src="js/cropper.min.js"></script>
+<style>
+/*修改提示文字的颜色*/
+input::-webkit-input-placeholder {
+	/* WebKit browsers */
+	font-size: 17px;
+}
+
+input:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	font-size: 17px;
+}
+
+input::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	font-size: 17px;
+}
+
+input:-ms-input-placeholder {
+	/* Internet Explorer 10+ */
+	font-size: 17px;
+}
+</style>
+
+<style>
+.ui-loader-default {
+	display: none
+}
+
+/*
+        .ui-mobile-viewport {
+	    border: none;
+        }
+        */
+.ui-page {
+	padding: 0;
+	margin: 0;
+	outline: 0
+}
+
+* {
+	font-size: 17px;
+	font-family: "shakai";
+	-webkit-transition-property: background-color;
+	-webkit-transition-duration: 0.3s;
+	-webkit-transition-timing-function: ease;
+	transition-property: background-color;
+	transition-duration: 0.5s;
+	transition-timing-function: ease;
+}
+
+body {
+	background-color: rgb(219, 78, 78);
+}
+
+.card {
+	backface-visibility: hidden;
+	border-radius: 30px;
+	position: absolute;
+	top: 10%;
+	left: 37%;
+	z-index: 99;
+}
+
+
+.front-card {
+	float: left;
+	overflow: hidden;
+	z-index: 20;
+	height: 400px;
+	width: 300px;
+	background: white;
+	border: 6px solid rgb(255, 96, 96);
+}
+
+.back-card {
+	z-index: 10;
+	overflow: hidden;
+	height: 400px;
+	width: 300px;
+	background: white;
+	border: 6px solid rgb(255, 96, 96);
+}
+
+.login-card {
+	float: left;
+	overflow: hidden;
+	z-index: 21;
+	height: 500px;
+	width: 300px;
+	background-color: white;
+	background: url('assets/pics/pa.png') no-repeat;
+	background-size: 100% 100%;
+	border: 6px solid rgb(255, 96, 96);
+}
+
+.register-card {
+	float: left;
+	overflow: hidden;
+	z-index: 21;
+	height: 500px;
+	width: 300px;
+	background-color: rgb(219, 78, 78);
+	border: 6px solid rgb(219, 78, 78);
+}
+
+.tailor-card {
+	display: none;
+	float: left;
+	overflow: hidden;
+	z-index: 21;
+	height: 500px;
+	width: 300px;
+	background-color: rgb(255, 255, 255);
+	border: 6px solid rgb(0, 0, 0);
+}
+
+#login-input {
+	position: relative;
+	height: 100%;
+}
+
+#username {
+	position: absolute;
+	color: solid rgb(255, 96, 96);
+	border: 3px solid rgb(255, 96, 96);
+	border-radius: 25px;
+	width: 45%;
+	height: 8%;
+	left: 27%;
+	top: 24%;
+}
+
+#pwd {
+	position: absolute;
+	color: solid rgb(255, 96, 96);
+	border: 3px solid rgb(255, 96, 96);
+	border-radius: 25px;
+	width: 45%;
+	height: 8%;
+	left: 27%;
+	top: 40%;
+}
+
+#register-username {
+	position: absolute;
+	color: solid rgb(219, 78, 78);
+	border: 3px solid rgb(219, 78, 78);
+	border-radius: 25px;
+	width: 45%;
+	height: 8%;
+	left: 27%;
+	top: 40%;
+}
+
+#register-pwd {
+	position: absolute;
+	color: solid rgb(219, 78, 78);
+	border: 3px solid rgb(219, 78, 78);
+	border-radius: 25px;
+	width: 45%;
+	height: 8%;
+	left: 27%;
+	top: 60%;
+}
+
+#register-register {
+	position: absolute;
+	left: 50%;
+	top: 75%;
+	color: #fff;
+	font-size: 24px;
+}
+
+#register-logging_in {
+	position: absolute;
+	left: 30%;
+	top: 75%;
+	color: #fff;
+	font-size: 24px;
+}
+
+#register {
+	position: absolute;
+	left: 60%;
+	color: rgb(135, 135, 135);
+	top: 52%;
+	font-size: 24px;
+}
+
+#logging_in {
+	position: absolute;
+	left: 20%;
+	color: rgb(135, 135, 135);
+	top: 52%;
+	font-size: 24px;
+}
+
+.uploadport {
+	background-color: white;
+	position: absolute;
+	top: 16%;
+	left: 36%;
+	height: 75px;
+	width: 75px;
+	border-radius: 100%;
+	overflow: hidden;
+	float: left;
+	border: 6px solid white;
+}
+
+img {
+	max-width: 100%;
+}
+
+.hidden {
+	display: none
+}
+
+.tailoring-box {
+	position: relative;
+	height: 250px;
+	width: 250px;
+	top: 10%;
+	left: 25px;
+	border-radius: 10px;
+	border: 3px solid rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255);
+}
+
+.choose-btn {
+	position: absolute;
+	background-color: rgb(255, 255, 255);
+	border-left: 3px solid rgb(255, 46, 46);
+	border-top: 2px solid rgb(255, 46, 46);
+	border-right: 3px solid rgb(255, 46, 46);
+	border-bottom: 2px solid rgb(255, 46, 46);
+	height: 50px;
+	width: 50px;
+	top: 69%;
+	left: 40%;
+	border-radius: 30px;
+}
+
+.tailoringImg {
+	position: absolute;
+}
+
+#sureCut {
+	position: absolute;
+	height: 13%;
+	width: 99%;
+	top: 86%;
+	left: 1;
+	border-radius: 30px;
+	border: 0;
+	margin: 0;
+	background-color: rgb(0, 0, 0);
+}
+
+</style>
+</head>
+
+<body>
+
+	<div class="card">
+
+		<div class="register-card card list flip out" id="card3">
+			<div id="login-input">
+				<div>
+					<img class="uploadport" onclick="openTailor()"
+						src="./assets/userimgs/testpot.png" />
+				</div>
+				<div>
+					<input id="register-username" type="text" placeholder="用户名" />
+				</div>
+				<div>
+					<input id="register-pwd" type="password" placeholder="密码" />
+				</div>
+				<a id="register-register" onclick="registername();return false;">注册</a>
+				<a id="register-logging_in" onclick="javascript:changetab()">登录</a>
+			</div>
+		</div>
+		<div class="login-card card list flip" id="card0">
+			<div id="login-input">
+				<div>
+					<input id="username" type="text" placeholder="用户名" />
+				</div>
+				<div>
+					<input id="pwd" type="password" placeholder="密码" />
+				</div>
+				<a id="register" onclick="javascript:changetab()">注册</a> <a
+					id="logging_in" onclick="loginname();return false;">登录</a>
+			</div>
+		</div>
+		<div class="card tailor-card" id="card6">
+			<div class="tailoring-box">
+				<img id="tailoringImg">
+			</div>
+
+			<div class="tailoring-content-three">
+				<button class="sureCut" id="sureCut"></button>
+			</div>
+			<div>
+				<label title="上传图片" for="chooseImg" class="choose-btn"> <input
+					type="file" accept="image/jpg,image/jpeg,image/png" name="file"
+					id="chooseImg" class="hidden" onchange="selectImg(this)">
+				</label>
+			</div>
+		</div>
+
+	</div>
+	<script>
+		var eleBack = null,
+			eleFront = null,
+			eleList = $(".list");
+		loginup = 1; //login是不是在上面-用来控制背景颜色变化
+		function changetab() { //切换登录和注册
+			if (loginup == 0) {
+				loginup = 1;
+				$("body").css("background-color", "rgb(219, 78, 78)");
+			} else {
+				loginup = 0;
+				$("body").css("background-color", "white");
+			}
+			eleFront.addClass("out").removeClass("in");
+			setTimeout(function () {
+				eleBack.addClass("in").removeClass("out");
+				BackOrFront();
+			}, 225);
+			return false;
+		}
+
+		function BackOrFront() {
+			eleList.each(function () {
+				if ($(this).hasClass("out")) {
+					eleBack = $(this);
+				} else {
+					eleFront = $(this);
+				}
+			});
+		}
+		$(document).ready(function () {
+			BackOrFront();
+		});
+	</script>
+	<script type="text/javascript">
+		// 选择文件触发事件  
+		function selectImg(file) { //选择了图片,将图片放在框里供裁剪
+			//文件为空，返回  
+			if (!file.files || !file.files[0]) {
+				return;
+			}
+			var reader = new FileReader();
+			reader.onload = function (evt) {
+				var replaceSrc = evt.target.result;
+				// 更换cropper的图片  
+				$('#tailoringImg').cropper('replace', replaceSrc, false); // 默认false，适应高度，不失真  
+			}
+			reader.readAsDataURL(file.files[0]);
+		}
+		// cropper图片裁剪  
+		$('#tailoringImg').cropper({
+			aspectRatio: 1 / 1, // 默认比例  
+			preview: '.uploadport', // 预览视图  
+			guides: false, // 裁剪框的虚线(九宫格)  
+			autoCropArea: 0.5, // 0-1之间的数值，定义自动剪裁区域的大小，默认0.8  
+			movable: false, // 是否允许移动图片  
+			dragCrop: true, // 是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域  
+			movable: true, // 是否允许移动剪裁框  
+			resizable: true, // 是否允许改变裁剪框的大小  
+			zoomable: true, // 是否允许缩放图片大小  
+			mouseWheelZoom: true, // 是否允许通过鼠标滚轮来缩放图片  
+			touchDragZoom: true, // 是否允许通过触摸移动来缩放图片  
+			rotatable: true, // 是否允许旋转图片  
+			crop: function (e) {
+				// 输出结果数据裁剪图像。  
+			}
+		});
+		// 确定按钮点击事件  
+		$("#sureCut").on("click", function () {
+			if ($("#tailoringImg").attr("src") == null) {
+				//return false;
+			} else {
+				var cas = $('#tailoringImg').cropper('getCroppedCanvas'); // 获取被裁剪后的canvas  
+				var base64 = cas.toDataURL('image/jpeg'); // 转换为base64  
+
+				$(".uploadport").prop("src", base64); // 显示图片  
+				uploadFile(encodeURIComponent(base64)) //编码后上传服务器  
+				
+			}
+			closeTailor(); // 关闭裁剪框  
+		});
+
+		function openTailor() {
+			$(".tailor-card").addClass("animated bounceInDown1");
+			$(".tailor-card").css("display", "inline");
+			setTimeout(
+				function () {
+					$(".tailor-card")
+						.removeClass(
+							"animated bounceInDown1");
+				}, 1000);
+
+		}
+		// 关闭裁剪框  
+		function closeTailor() {
+			$(".tailor-card")
+				.addClass(
+					"animated bounceOutDown1");
+			setTimeout(
+				function () {
+					$(".tailor-card")
+						.removeClass(
+							"animated bounceOutDown1");
+					$(".tailor-card").css("display", "none");
+				}, 1000);
+		}
+
+		//ajax请求上传  
+		function uploadFile(file) {
+			portraitdone=1;
+			$.ajax({
+				url: '/MicroBlog/PostPortraitServlet',
+				type: 'POST',
+				data: "file=" + file,
+				async: true,
+				success: function (data) {
+					console.log(data);
+					if(data=="portuploadsuccess"){
+						portraitdone=2;
+					}else{
+						alert("啊咧咧,头像上传失败");
+						portraitdone=3;
+					}
+				}
+			});
+		}
+	</script>
+	<script>
+		var portraitdone=0;//0没有上传,1上传中,2成功,3上传失败
+		$(document).ready(function () {
+			$(".tailor-card").draggable({
+				axis: "y",
+				cancel: '.tailoring-box'
+			});
+			$(".tailor-card").droppable();
+			$(".tailor-card").on("dragstop", function (event, ui) {
+				closeTailor();
+			});
+		});
+	</script>
+</body>
